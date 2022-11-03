@@ -44,8 +44,8 @@ if __name__ == '__main__':
     # teams_quantity = input("Ingresa la cantidad de equipos: ")
     # max_warriors = input("Ingresa la cantidad maxima de guerreros: ")
 
-    teams_quantity = 3
-    max_warriors = 5
+    teams_quantity = 5
+    max_warriors = 10
     
     sel = "N"
 
@@ -56,7 +56,8 @@ if __name__ == '__main__':
         pass
 
     playing = True
-
+    print(main_matrix)
+    
     while(playing):
         aux_list = []
         turn = randint(0, teams_quantity-1)
@@ -73,6 +74,11 @@ if __name__ == '__main__':
                         aux_list.append(x)
                 teams = aux_list
                 teams_quantity = len(teams)
+                main_matrix = random_matrix(teams_quantity)
+                print(teams)
+                print(main_matrix)
+
     print(teams)
+    print(main_matrix)
 
 
