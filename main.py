@@ -11,22 +11,23 @@ Print functions
 '''
 
 def print_initial(matrix, teams):
-    print_matrix(matrix)
-    print('\n')
-    print_teams(teams)
+    result = print_matrix(matrix) + '\n'
+    result += print_teams(teams)
+    return result
 
 def print_matrix(matrix):
-    print(matrix)
+    return str(matrix)
 
 def print_teams(teams):
     result = f'''Number of warriors for each group \n'''
     for x in range(len(teams)):
         result += f'Group {x+1} : {teams[x]}\n'
-    print(result)
+    return result
 
 def print_attack(attacker, poor_guy, teams):
-    print(f'\nGroup {attacker+1} attacked Group {poor_guy+1}!')
-    print_teams(teams)
+    result = f'\nGroup {attacker+1} attacked Group {poor_guy+1}!\n'
+    result += print_teams(teams)
+    return result
 
 def print_annihilation(status = 0, poor_guy = 0, winner = 0):
     if status == 1:
@@ -41,7 +42,7 @@ Group {winner+1} is the winner!
 =================================
 Reconfiguring stochastic matrix
 '''
-    print(result)
+    return result
 
 '''
     General project functions
@@ -110,8 +111,8 @@ if __name__ == '__main__':
     sel = "N"
 
     if (sel == "N" or sel == "n"):
-        teams_quantity = int(input("Ingresa la cantidad de equipos: "))
-        max_warriors = int(input("Ingresa la cantidad maxima de guerreros: "))
+        # teams_quantity = int(input("Ingresa la cantidad de equipos: "))
+        # max_warriors = int(input("Ingresa la cantidad maxima de guerreros: "))
         main_matrix = random_matrix(teams_quantity)
         teams = random_warriors(teams_quantity, max_warriors)
     else:
@@ -120,20 +121,19 @@ if __name__ == '__main__':
     playing = True
 
     # Game starts!    
-    print_initial(main_matrix, teams)
+    resultados = "Initial matrix \n"
+    resultados += print_initial(main_matrix, teams)
 
     while(playing):
         aux_list = []
         turn = randint(0, teams_quantity-1)
         poor_guy = choose_poor_guy_v2(turn, main_matrix)
         teams[poor_guy] -= 1
-        print_attack(turn, poor_guy, teams)
-        # print(teams)
-        # print(poor_guy)
+        resultados += print_attack(turn, poor_guy, teams)
         if 0 in teams:            
             if len(teams) == 2:
                 playing = False
-                print_annihilation(1, poor_guy, turn)
+                resultados += print_annihilation(1, poor_guy, turn)
             else:
                 for x in teams:
                     if x != 0:
@@ -141,12 +141,9 @@ if __name__ == '__main__':
                 teams = aux_list
                 teams_quantity = len(teams)
                 main_matrix = random_matrix(teams_quantity)
-                print_annihilation(0, poor_guy)
-                print_matrix(main_matrix)
+                resultados += print_annihilation(0, poor_guy)
+                resultados += print_matrix(main_matrix)
 
-                # print(teams)
-                # print(main_matrix)
-
-    # print(teams)
-    # print(main_matrix)  
+    with open("resultados.txt", "w") as f:
+        f.write(resultados)
 
