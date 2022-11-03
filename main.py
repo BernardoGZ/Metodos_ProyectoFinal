@@ -14,26 +14,53 @@ def random_matrix(size = 3):
     for x in range(size):
         n = 1
         acum = 0
+        if x == size-1:
+            size_to_compare = 2
+        else:
+            size_to_compare = 1
         for y in range(size):
-            if(y == size-1):
-                n = 1 - acum
+            if(x == y):
+                matrix[x][y] = 0.0
             else:
-                n = round(uniform(0, 1 - acum), 2)
+                if(y == size-size_to_compare):
+                    n = 1 - acum
+                else:
+                    n = round(uniform(0, 1 - acum), 1)
 
-            matrix[x][y] = n
-            acum += n
-            # print(matrix)  
+                matrix[x][y] = n
+                acum += n
+                # print(matrix)
     
     return matrix
 
 def random_warriors(size = 3, max_warriors = 10):
     return np.random.randint(low = 1, high= max_warriors, size = size)
 
-def choose_poor_guy(size = 3):
-    return randint(0, size-1)
+def choose_poor_guy_v1(size = 3, team_number = 0):
+    n = -1
+    while (n != team_number):
+        n = randint(0, size-1)
+    return n
+    
+def choose_poor_guy_v2(team_number, main_matrix):
+    probability_list = []
+    team_probs = main_matrix[team_number] * 10
+    team_probs = [int(x) for x in team_probs]
+    # print(team_probs)
+    # for x in range(10):
+    for y in range(len(team_probs)):
+        while team_probs[y] != 0:
+            probability_list.append(y)
+            team_probs[y] -= 1
+    
+    num_attack = randint(0, 9)
+    return probability_list[num_attack]
+    
 
-def attack(team_number, poor_guy):
-    pass
+        
+
+
+    # pass
 
 
 
@@ -45,8 +72,7 @@ if __name__ == '__main__':
     # max_warriors = input("Ingresa la cantidad maxima de guerreros: ")
 
     teams_quantity = 5
-    max_warriors = 10
-    
+    max_warriors = 10    
     sel = "N"
 
     if (sel == "N" or sel == "n"):
@@ -56,13 +82,16 @@ if __name__ == '__main__':
         pass
 
     playing = True
-    print(main_matrix)
-    
+
+    # attack(1, 0, main_matrix)
+
     while(playing):
         aux_list = []
         turn = randint(0, teams_quantity-1)
-        poor_guy = choose_poor_guy(teams_quantity)
+        # poor_guy = choose_poor_guy(teams_quantity, turn)
+        poor_guy = choose_poor_guy_v2(turn, main_matrix)
         print(teams)
+        print(poor_guy)
         teams[poor_guy] -= 1
         if 0 in teams:
             print(teams)
@@ -79,6 +108,5 @@ if __name__ == '__main__':
                 print(main_matrix)
 
     print(teams)
-    print(main_matrix)
-
+    print(main_matrix)  
 
