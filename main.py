@@ -6,6 +6,48 @@
 import numpy as np
 from random import randint, random, uniform
 
+'''
+Print functions
+'''
+
+def print_initial(matrix, teams):
+    print_matrix(matrix)
+    print('\n')
+    print_teams(teams)
+
+def print_matrix(matrix):
+    print(matrix)
+
+def print_teams(teams):
+    result = f'''Number of warriors for each group \n'''
+    for x in range(len(teams)):
+        result += f'Group {x+1} : {teams[x]}\n'
+    print(result)
+
+def print_attack(attacker, poor_guy, teams):
+    print(f'\nGroup {attacker+1} attacked Group {poor_guy+1}!')
+    print_teams(teams)
+
+def print_annihilation(status = 0, poor_guy = 0, winner = 0):
+    if status == 1:
+        result = f'''Group {poor_guy+1} is annihilated!
+
+===============================
+Group {winner+1} is the winner!
+==============================='''
+    else:
+        result = f'''Group {poor_guy+1} is annihilated!
+
+=================================
+Reconfiguring stochastic matrix
+'''
+    print(result)
+
+'''
+    General project functions
+'''
+
+
 def random_matrix(size = 3):
     #Initializing matrix and lists to be added
     matrix = np.zeros(shape=(size, size))
@@ -53,14 +95,8 @@ def choose_poor_guy_v2(team_number, main_matrix):
             probability_list.append(y)
             team_probs[y] -= 1
     
-    num_attack = randint(0, 9)
+    num_attack = randint(0, 8)
     return probability_list[num_attack]
-    
-
-        
-
-
-    # pass
 
 
 
@@ -68,14 +104,14 @@ if __name__ == '__main__':
     #Variables iniciales pueden ser elegidas por el usuario
     
     # sel = input("Deseas ingresar los valores iniciales por tu cuenta? Y/N")
-    # teams_quantity = input("Ingresa la cantidad de equipos: ")
-    # max_warriors = input("Ingresa la cantidad maxima de guerreros: ")
 
     teams_quantity = 5
     max_warriors = 10    
     sel = "N"
 
     if (sel == "N" or sel == "n"):
+        teams_quantity = int(input("Ingresa la cantidad de equipos: "))
+        max_warriors = int(input("Ingresa la cantidad maxima de guerreros: "))
         main_matrix = random_matrix(teams_quantity)
         teams = random_warriors(teams_quantity, max_warriors)
     else:
@@ -83,20 +119,21 @@ if __name__ == '__main__':
 
     playing = True
 
-    # attack(1, 0, main_matrix)
+    # Game starts!    
+    print_initial(main_matrix, teams)
 
     while(playing):
         aux_list = []
         turn = randint(0, teams_quantity-1)
-        # poor_guy = choose_poor_guy(teams_quantity, turn)
         poor_guy = choose_poor_guy_v2(turn, main_matrix)
-        print(teams)
-        print(poor_guy)
         teams[poor_guy] -= 1
-        if 0 in teams:
-            print(teams)
+        print_attack(turn, poor_guy, teams)
+        # print(teams)
+        # print(poor_guy)
+        if 0 in teams:            
             if len(teams) == 2:
                 playing = False
+                print_annihilation(1, poor_guy, turn)
             else:
                 for x in teams:
                     if x != 0:
@@ -104,9 +141,12 @@ if __name__ == '__main__':
                 teams = aux_list
                 teams_quantity = len(teams)
                 main_matrix = random_matrix(teams_quantity)
-                print(teams)
-                print(main_matrix)
+                print_annihilation(0, poor_guy)
+                print_matrix(main_matrix)
 
-    print(teams)
-    print(main_matrix)  
+                # print(teams)
+                # print(main_matrix)
+
+    # print(teams)
+    # print(main_matrix)  
 
