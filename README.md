@@ -44,4 +44,11 @@ Number of warriors for each group
     Group 4 : 9
     Group 5 : 10
 
+- Entrada por consola
+
+Para la lectura de datos por consola el usuario debe ingresar todos los datos manualmente por la terminal. De ser este el caso, se debe de seguir el mismo orden solicitado en el archivo de texto, no obstante, las instrucciones se brindan en la consola.
+
+### Salida de resultados
+El sistema brinda los resultados redactados en un archivo de texto llamado "resultados.txt"
+
 
