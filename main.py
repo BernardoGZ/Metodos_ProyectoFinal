@@ -46,7 +46,7 @@ Reconfiguring stochastic matrix
     return result
 
 '''
-    General project functions
+General project functions
 '''
 
 def random_matrix(size = 3):
