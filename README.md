@@ -47,4 +47,8 @@ Para la lectura de datos por consola el usuario debe ingresar todos los datos ma
 ### Salida de resultados
 El sistema brinda los resultados redactados en un archivo de texto llamado "resultados.txt"
 
+### Video Pruebas
+En la siguiente liga se muestra un video demo corriendo las pruebas indicadas:
+https://drive.google.com/file/d/1ERh_zZhmhHoX20Mg7R6xw1hWnyiXz8BP/view?usp=sharing
+
 
